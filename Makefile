@@ -10,5 +10,8 @@ install:
 	$(VENV)/bin/pip install --upgrade pip
 	$(VENV)/bin/pip install -r requirements.txt
 
+clean:
+	rm -rf model.json
+
 fclean:
 	rm -rf $(VENV)
