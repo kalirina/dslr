@@ -13,15 +13,25 @@ def main():
     numeric_df = df.select_dtypes(include=['number'])
     
     correlation = numeric_df.corr().abs()
-    #drop the diagonal of 1.0
+    #Drop the diagonal of 1.0
+    #.triu stands for upper triangle
     upper_triangle_mask = np.triu(np.ones(correlation.shape), k=1).astype(bool)
     upper_triangle = correlation.where(upper_triangle_mask)
 
-    top_features = upper_triangle.unstack().idxmax()
+    top_features = upper_triangle.unstack().idxmax()[0:2]
     top_score = upper_triangle.unstack().max()
 
     print(f"The two most similar features are: {top_features[0]} and {top_features[1]}")
-    print(f"Correlation score: {top_score:.4f}")
+    print(f"Correlation score: {top_score:.3f}")
+
+    plt.figure(figsize=(10,10))
+    plt.scatter(df[top_features[0]], df[top_features[1]])
+
+    plt.xlabel(top_features[0])
+    plt.ylabel(top_features[1])
+
+    plt.title('Most similar features')
+    plt.show()
 
 if __name__ == '__main__':
     try:
