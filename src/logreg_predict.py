@@ -16,7 +16,7 @@ def main():
         return 1
 
     try:
-        with open("data/thetas.json", "r") as file:
+        with open("model.json", "r") as file:
             model = json.load(file)
     except FileNotFoundError:
         print("Train the model first")

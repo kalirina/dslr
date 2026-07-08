@@ -1,4 +1,4 @@
-from utils import sigmoid, extract, preprocess_tmp
+from utils import sigmoid, extract
 import numpy as np
 import json
 import pandas as pd
@@ -6,18 +6,15 @@ import os
 
 
 def main():
-    learning_rate = 0.1
-    epochs = 1000
+    learning_rate = 0.01
+    epochs = 5000
     houses = ["Gryffindor", "Ravenclaw", "Slytherin", "Hufflepuff"]
 
-    if not os.path.exists("src/model.json"):
+    if not os.path.exists("model.json"):
         print("Need to preprocess data fisrt")
         return 0
 
-    #delete after:
-    preprocess_tmp("datasets/dataset_train.csv")
-
-    with open("src/model.json", "r") as file:
+    with open("model.json", "r") as file:
         model = json.load(file)
 
     X = extract("datasets/dataset_train.csv", model)
@@ -36,15 +33,18 @@ def main():
         y = (y_houses == house).astype(int)
         m = len(y)
 
-        for _ in range(epochs):
+        for epoch in range(epochs):
             predictions = sigmoid(np.dot(X, theta))
             error = predictions - y
+            loss = -np.mean(y * np.log(predictions) + (1-y) * np.log(1-predictions))
             gradient = np.dot(X.T, error) / m
             theta -= learning_rate * gradient
+            if epoch % 500 == 0:
+                print(house, loss)
 
         model["thetas"][house] = theta.tolist()
 
-    with open("src/model.json", "w") as file:
+    with open("model.json", "w") as file:
         json.dump(model, file, indent=4)
 
 
