@@ -1,5 +1,18 @@
 import pandas as pd
 import sys
+import json
+
+
+def export_to_json(stats_dict):
+    """Export the stats dict to JSON"""
+    export_data = {
+        "features": list(stats_dict.keys()),
+        "mean": {feat: stats_dict[feat]["Mean"] for feat in stats_dict},
+        "std": {feat: stats_dict[feat]["Std"] for feat in stats_dict}
+    }
+    
+    with open("model.json", "w") as f:
+        json.dump(export_data, f, indent=4)
 
 
 def print_stats_table(stats_dict):
@@ -114,7 +127,7 @@ def main():
     numeric_df = df.select_dtypes(include=['number'])
     features = numeric_df.columns
     
-    stats = {}
+    stats_dict = {}
 
     for feature in features:
         data = numeric_df[feature].dropna().tolist()
@@ -125,7 +138,7 @@ def main():
 
         q1, q2 = quartile(data, count)
 
-        stats[feature] = {
+        stats_dict[feature] = {
             "Count" : count,
             "Mean" : mean(data, count),
             "Std" : std(data, count),
@@ -136,15 +149,14 @@ def main():
             "Max" : find_max(data)
         }
     
+    export_to_json(stats_dict)
     print_stats_table(stats)
 
 
 if __name__ == '__main__':
     try:
-        assert len(sys.argv) == 2, "Invalid number of arguments"
+        usage = "Usage: describe.py <file.csv>"
+        assert len(sys.argv) == 2, f"Invalid number of arguments\n{usage}"
         main()
     except Exception as e:
         print(e)
-
-
-
