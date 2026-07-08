@@ -15,10 +15,9 @@ def export_to_json(stats_dict):
         json.dump(export_data, f, indent=4)
 
 
-def print_stats_table(stats_dict):
+def print_stats_table(stats_dict, stat_names):
     """ Prints the table displaying the stats of each feature"""
     features = list(stats_dict.keys())
-    stat_names = ['Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max']
 
     MAX_WIDTH = 14
 
@@ -119,15 +118,25 @@ def main():
     """
         Prints the following stats for each feature in the
         csv passed as an argument:
-        Count, Mean, Std, Min, q1, q2, q3, Max
+        Count, Mean, Std, Min, q1, median, q3, Max
+        With -bonus: Var, Range, IQR, CV
     """
+    
+    csv_file = sys.argv[1]
+    bonus = (len(sys.argv) == 3 and sys.argv[2] == '-bonus')
 
-    df = pd.read_csv(sys.argv[1])
-    df = df.drop('Index', axis='columns')
+    df = pd.read_csv(csv_file)
+    if 'Index' in df.columns:
+        df = df.drop('Index', axis='columns')
     numeric_df = df.select_dtypes(include=['number'])
     features = numeric_df.columns
 
     stats_dict = {}
+    
+    stat_names = ['Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max']
+    
+    if bonus:
+        stat_names.extend(['Var', 'Range', 'IQR', 'CV'])
 
     for feature in features:
         data = numeric_df[feature].dropna().tolist()
@@ -135,28 +144,43 @@ def main():
 
         if count == 0:
             continue
+        
+        mean_val = mean(data, count)
+        std_val = std(data, count)
+        min_val = find_min(data)
+        max_val = find_max(data)
+        q1, q3 = quartile(data, count)
+        median_val = median(data, count)
 
-        q1, q2 = quartile(data, count)
-
-        stats_dict[feature] = {
+        feature_stats = {
             "Count": count,
-            "Mean": mean(data, count),
-            "Std": std(data, count),
-            "Min": find_min(data),
+            "Mean": mean_val,
+            "Std": std_val,
+            "Min": min_val,
             "25%": q1,
-            "50%": median(data, count),
-            "75%": q2,
-            "Max": find_max(data)
+            "50%": median_val,
+            "75%": q3,
+            "Max": max_val
         }
+        
+        if bonus:
+            feature_stats["Var"] = var(data, count)
+            feature_stats["Range"] = float(max_val - min_val)
+            feature_stats["IQR"] = float(q3 - q1)
+            feature_stats["CV"] = float(std_val / mean_val) if mean_val != 0 else 0.0
+
+        stats_dict[feature] = feature_stats
 
     export_to_json(stats_dict)
-    print_stats_table(stats_dict)
+    print_stats_table(stats_dict, stat_names)
 
 
 if __name__ == '__main__':
     try:
-        usage = "Usage: describe.py <file.csv>"
-        assert len(sys.argv) == 2, f"Invalid number of arguments\n{usage}"
+        usage = "Usage: describe.py <file.csv> [-bonus]"
+        assert len(sys.argv) in [2, 3], f"Invalid number of arguments\n{usage}"
+        if len(sys.argv) == 3:
+            assert sys.argv[2] == '-bonus', f"Invalid argument\n{usage}"
         main()
     except Exception as e:
         print(e)
