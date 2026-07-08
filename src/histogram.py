@@ -36,15 +36,19 @@ def diaply_all_hist(gryffindor, ravenclaw, hufflepuff, slytherin):
 def display_single_hist(gryffindor, ravenclaw, hufflepuff, slytherin):
     """Only displays the hist of the only subject where the four houses
     have homogeneous score distribution """
-    plt.figure(figsize=(10,10))
+    plt.figure(figsize=(10, 10))
 
-    plt.hist(gryffindor['Care of Magical Creatures'], bins=30, alpha=0.4, label='Gryffindor')
-    plt.hist(ravenclaw['Care of Magical Creatures'], bins=30, alpha=0.4, label='Ravenclaw')
-    plt.hist(hufflepuff['Care of Magical Creatures'], bins=30, alpha=0.4, label='Hufflepuff')
-    plt.hist(slytherin['Care of Magical Creatures'], bins=30, alpha=0.4, label='Slytherin')
+    plt.hist(gryffindor['Care of Magical Creatures'],
+             bins=30, alpha=0.4, label='Gryffindor')
+    plt.hist(ravenclaw['Care of Magical Creatures'],
+             bins=30, alpha=0.4, label='Ravenclaw')
+    plt.hist(hufflepuff['Care of Magical Creatures'],
+             bins=30, alpha=0.4, label='Hufflepuff')
+    plt.hist(slytherin['Care of Magical Creatures'],
+             bins=30, alpha=0.4, label='Slytherin')
     plt.legend()
     plt.title('Care of Magical Creatures')
-    
+
     plt.show()
 
 
@@ -67,6 +71,7 @@ def main():
         diaply_all_hist(gryffindor, ravenclaw, hufflepuff, slytherin)
     else:
         display_single_hist(gryffindor, ravenclaw, hufflepuff, slytherin)
+
 
 if __name__ == '__main__':
     try:
