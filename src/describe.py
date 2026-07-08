@@ -101,6 +101,10 @@ def main():
     for feature in features:
         data = numeric_df[feature].dropna().tolist()
         count = len(data)
+        
+        if count == 0:
+            continue
+
         q1, q2 = quartile(data, count)
 
         stats[feature] = {
