@@ -84,6 +84,24 @@ def std(nums, size):
     return var(nums, size) ** 0.5
 
 
+def find_min(nums):
+    """Returns the smallest number in a list"""
+    min_n = nums[0]
+    for n in nums:
+        if n < min_n:
+            min_n = n
+    return min_n
+
+
+def find_max(nums):
+    """Returns the biggest number in a list"""
+    max_n = nums[0]
+    for n in nums:
+        if n > max_n:
+            max_n = n
+    return max_n
+
+
 def main():
     """ 
         Prints the following stats for each feature in the
@@ -111,11 +129,11 @@ def main():
             "Count" : count,
             "Mean" : mean(data, count),
             "Std" : std(data, count),
-            "Min" : min(data),
+            "Min" : find_min(data),
             "25%" : q1,
             "50%" : median(data, count),
             "75%" : q2,
-            "Max" : max(data)
+            "Max" : find_max(data)
         }
     
     print_stats_table(stats)
