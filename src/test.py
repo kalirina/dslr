@@ -16,3 +16,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# .venv/bin/pip install scikit-learn

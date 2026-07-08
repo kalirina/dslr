@@ -61,11 +61,11 @@ make fclean
 * Python 3
 * numpy
 * pandas
-*
 
 ### Articles & Tutorials
 
-* [Multiclass logistic regression from scratch](https://medium.com/data-science/multiclass-logistic-regression-from-scratch-9cc0007da372)
+* [Multiclass logistic regression from scratch by GeeksforGeeks](https://medium.com/data-science/multiclass-logistic-regression-from-scratch-9cc0007da372)
+* [Stochastic Gradient Descent by GeeksforGeeks](https://www.geeksforgeeks.org/machine-learning/ml-stochastic-gradient-descent-sgd/)
 
 ### AI Usage
 
