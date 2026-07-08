@@ -121,7 +121,7 @@ def main():
         Count, Mean, Std, Min, q1, median, q3, Max
         With -bonus: Var, Range, IQR, CV
     """
-    
+
     csv_file = sys.argv[1]
     bonus = (len(sys.argv) == 3 and sys.argv[2] == '-bonus')
 
@@ -132,9 +132,9 @@ def main():
     features = numeric_df.columns
 
     stats_dict = {}
-    
+
     stat_names = ['Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max']
-    
+
     if bonus:
         stat_names.extend(['Var', 'Range', 'IQR', 'CV'])
 
@@ -144,7 +144,7 @@ def main():
 
         if count == 0:
             continue
-        
+
         mean_val = mean(data, count)
         std_val = std(data, count)
         min_val = find_min(data)
@@ -162,12 +162,15 @@ def main():
             "75%": q3,
             "Max": max_val
         }
-        
+
         if bonus:
             feature_stats["Var"] = var(data, count)
             feature_stats["Range"] = float(max_val - min_val)
             feature_stats["IQR"] = float(q3 - q1)
-            feature_stats["CV"] = float(std_val / mean_val) if mean_val != 0 else 0.0
+            if mean_val != 0:
+                feature_stats["CV"] = float(std_val / mean_val)
+            else:
+                feature_stats["CV"] = 0.0
 
         stats_dict[feature] = feature_stats
 
