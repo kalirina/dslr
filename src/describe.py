@@ -10,7 +10,7 @@ def export_to_json(stats_dict):
         "mean": {feat: stats_dict[feat]["Mean"] for feat in stats_dict},
         "std": {feat: stats_dict[feat]["Std"] for feat in stats_dict}
     }
-    
+
     with open("model.json", "w") as f:
         json.dump(export_data, f, indent=4)
 
@@ -19,32 +19,32 @@ def print_stats_table(stats_dict):
     """ Prints the table displaying the stats of each feature"""
     features = list(stats_dict.keys())
     stat_names = ['Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max']
-    
+
     MAX_WIDTH = 14
-    
+
     col_widths = {}
     for feat in features:
         col_widths[feat] = min(max(len(feat), 12), MAX_WIDTH) + 1
-    
-    header = f"{'':>10}" 
+
+    header = f"{'':>10}"
     for feat in features:
         if len(feat) > MAX_WIDTH:
             display_name = feat[:MAX_WIDTH-2] + ".."
         else:
             display_name = feat
-            
+
         header += f" {display_name:>{col_widths[feat]}}"
     print(header)
-    
+
     for stat in stat_names:
         row_str = f"{stat:>10}"
-        
+
         for feat in features:
-            val = stats_dict[feat][stat] 
+            val = stats_dict[feat][stat]
             val_str = f"{val:.6f}"
-    
+
             row_str += f" {val_str:>{col_widths[feat]}}"
-            
+
         print(row_str)
 
 
@@ -116,7 +116,7 @@ def find_max(nums):
 
 
 def main():
-    """ 
+    """
         Prints the following stats for each feature in the
         csv passed as an argument:
         Count, Mean, Std, Min, q1, q2, q3, Max
@@ -126,31 +126,31 @@ def main():
     df = df.drop('Index', axis='columns')
     numeric_df = df.select_dtypes(include=['number'])
     features = numeric_df.columns
-    
+
     stats_dict = {}
 
     for feature in features:
         data = numeric_df[feature].dropna().tolist()
         count = len(data)
-        
+
         if count == 0:
             continue
 
         q1, q2 = quartile(data, count)
 
         stats_dict[feature] = {
-            "Count" : count,
-            "Mean" : mean(data, count),
-            "Std" : std(data, count),
-            "Min" : find_min(data),
-            "25%" : q1,
-            "50%" : median(data, count),
-            "75%" : q2,
-            "Max" : find_max(data)
+            "Count": count,
+            "Mean": mean(data, count),
+            "Std": std(data, count),
+            "Min": find_min(data),
+            "25%": q1,
+            "50%": median(data, count),
+            "75%": q2,
+            "Max": find_max(data)
         }
-    
+
     export_to_json(stats_dict)
-    print_stats_table(stats)
+    print_stats_table(stats_dict)
 
 
 if __name__ == '__main__':
