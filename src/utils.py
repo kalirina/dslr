@@ -8,6 +8,9 @@ def sigmoid(z):
 
 def extract(path, model):
     df = pd.read_csv(path)
+    if df.empty:
+        print("Error: dataset is empty")
+        return
     X = df[model["features"]].astype(float)
     for feature in model["features"]:
         mean = model["mean"][feature]

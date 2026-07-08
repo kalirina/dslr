@@ -16,6 +16,36 @@ Create virtual environment:
 make
 ```
 
+Activate virtual environment:
+
+```sh
+source .venv/bin/activate
+```
+
+Data Analysis:
+
+```sh
+python src/describe.py datasets/dataset_train.csv
+```
+
+Training the model:
+
+```sh
+python src/logreg_train.py datasets/dataset_train.csv
+```
+
+Predicting:
+
+```sh
+python src/logreg_predict.py datasets/dataset_test.csv
+```
+
+Clean the results (houses.csv, model.json):
+
+```sh
+make clean
+```
+
 Clean virtual environment:
 
 ```sh

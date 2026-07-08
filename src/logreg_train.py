@@ -3,23 +3,38 @@ import numpy as np
 import json
 import pandas as pd
 import os
+import sys
 
 
 def main():
+    if len(sys.argv) != 2:
+        print("Wrong number of arguments")
+        return 1
+    dataset = sys.argv[1]
+    if not dataset.lower().endswith(".csv"):
+        print("Dataset file must have a .csv extension")
+        return 1
+    if not os.path.exists(dataset):
+        print("Dataset file doesn't exist")
+        return 1
+    if os.path.getsize(dataset) == 0:
+        print("Dataset file is empty")
+        return 1
+
     learning_rate = 0.01
     epochs = 5000
     houses = ["Gryffindor", "Ravenclaw", "Slytherin", "Hufflepuff"]
 
     if not os.path.exists("model.json"):
         print("Need to preprocess data fisrt")
-        return 0
+        return 1
 
     with open("model.json", "r") as file:
         model = json.load(file)
 
-    X = extract("datasets/dataset_train.csv", model)
+    X = extract(dataset, model)
 
-    df = pd.read_csv("datasets/dataset_train.csv")
+    df = pd.read_csv(dataset)
     y_houses = df["Hogwarts House"].values
 
     if "thetas" not in model:
@@ -49,4 +64,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(e)
