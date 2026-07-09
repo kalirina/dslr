@@ -55,14 +55,17 @@ def main():
         for _ in range(epochs):
             predictions = sigmoid(np.dot(X, theta))
             error = predictions - y
-            loss = -np.mean(y * np.log(predictions) + (1-y) * np.log(1-predictions))
+
+            loss = -np.mean(y * np.log(predictions) +
+                            (1-y) * np.log(1-predictions))
             loss_history[house].append(loss)
+
             gradient = np.dot(X.T, error) / m
             theta -= learning_rate * gradient
 
         model["thetas"][house] = theta.tolist()
 
-    plot_loss(loss_history,"BGD")
+    plot_loss(loss_history, "BGD")
 
     with open("model.json", "w") as file:
         json.dump(model, file, indent=4)

@@ -22,8 +22,9 @@ def main():
         print("Dataset file is empty")
         return 1
 
+    beta = 0.9
     learning_rate = 0.01
-    epochs = 1000
+    epochs = 5000
     houses = ["Gryffindor", "Ravenclaw", "Slytherin", "Hufflepuff"]
 
     if not os.path.exists("model.json"):
@@ -48,32 +49,26 @@ def main():
             model["thetas"][house] = [0.0] * X.shape[1]
 
         theta = np.array(model["thetas"][house], dtype=float)
+        velocity = np.zeros_like(theta)
         y = (y_houses == house).astype(int)
         m = len(y)
         loss_history[house] = []
-        batch_size = 32
 
         for _ in range(epochs):
-            indexes = np.random.permutation(m)
-            for start in range(0, m, batch_size):
-                batch = indexes[start:start + batch_size]
-                X_batch = X[batch]
-                y_batch = y[batch]
-
-                predictions = sigmoid(np.dot(X_batch, theta))
-                error = predictions - y_batch
-                gradient = np.dot(X_batch.T, error) / len(batch)
-                theta -= learning_rate * gradient
-
-            # for plotting loss
             predictions = sigmoid(np.dot(X, theta))
+            error = predictions - y
+
             loss = -np.mean(y * np.log(predictions) +
                             (1-y) * np.log(1-predictions))
             loss_history[house].append(loss)
 
+            gradient = np.dot(X.T, error) / m
+            velocity = beta * velocity + gradient
+            theta -= learning_rate * velocity
+
         model["thetas"][house] = theta.tolist()
 
-    plot_loss(loss_history, "Mini_batch_GD")
+    plot_loss(loss_history, "Momentum")
 
     with open("model.json", "w") as file:
         json.dump(model, file, indent=4)
