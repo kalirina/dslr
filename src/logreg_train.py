@@ -62,7 +62,7 @@ def main():
 
         model["thetas"][house] = theta.tolist()
 
-    plot_loss(loss_history)
+    plot_loss(loss_history,"BGD")
 
     with open("model.json", "w") as file:
         json.dump(model, file, indent=4)

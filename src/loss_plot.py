@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def plot_loss(loss_history):
+def plot_loss(loss_history, name):
     fig, axes = plt.subplots(2, 2, figsize=(10, 8))
     axes = axes.flatten()
 
@@ -12,5 +12,5 @@ def plot_loss(loss_history):
         ax.grid(True)
 
     plt.tight_layout()
-    plt.savefig("loss.png")
+    plt.savefig(name + "_loss" + ".png")
     plt.close()
