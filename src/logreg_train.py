@@ -52,7 +52,7 @@ def main():
         m = len(y)
         loss_history[house] = []
 
-        for epoch in range(epochs):
+        for _ in range(epochs):
             predictions = sigmoid(np.dot(X, theta))
             error = predictions - y
             loss = -np.mean(y * np.log(predictions) + (1-y) * np.log(1-predictions))

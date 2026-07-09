@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 def plot_loss(loss_history, name):
     fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+    fig.suptitle(name + " Loss Curve", fontsize=20)
     axes = axes.flatten()
 
     for ax, (house, losses) in zip(axes, loss_history.items()):

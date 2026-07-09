@@ -11,7 +11,10 @@ install:
 	$(VENV)/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf model.json houses.csv BDG_loss.png SGD_loss.png
+	rm -rf model.json houses.csv
+
+clean-graphs:
+	rm -rf BGD_loss.png SGD_loss.png Mini_batch_GD_loss.png
 
 fclean:
 	rm -rf $(VENV)
