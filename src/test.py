@@ -11,7 +11,8 @@ def main():
 
     accuracy = accuracy_score(y_true, y_pred)
     print("Accuracy:", accuracy * 100, "%")
-    print("Mistake percentage:", (1 - accuracy_score(y_true, y_pred)) * 100, "%")
+    print("Mistake percentage:",
+          (1 - accuracy_score(y_true, y_pred)) * 100, "%")
 
 
 if __name__ == "__main__":

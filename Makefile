@@ -16,5 +16,5 @@ clean:
 clean-graphs:
 	rm -rf graphs/*
 
-fclean:
+fclean: clean clean-graphs
 	rm -rf $(VENV)

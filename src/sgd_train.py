@@ -63,7 +63,8 @@ def main():
 
             # for plotting loss
             predictions = sigmoid(np.dot(X, theta))
-            loss = -np.mean(y * np.log(predictions) + (1-y) * np.log(1-predictions))
+            loss = -np.mean(y * np.log(predictions) +
+                            (1-y) * np.log(1-predictions))
             loss_history[house].append(loss)
 
         model["thetas"][house] = theta.tolist()
