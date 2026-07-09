@@ -14,6 +14,7 @@ def main():
     plot_df = df[columns_to_plot]
 
     sns.pairplot(plot_df, hue='Hogwarts House', diag_kind='hist')
+    # plt.savefig('../graphs/pair_plot.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 
