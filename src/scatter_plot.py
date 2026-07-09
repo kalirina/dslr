@@ -9,7 +9,7 @@ def main():
     using a scatterplot
     """
 
-    df = pd.read_csv('../datasets/dataset_train.csv')
+    df = pd.read_csv('datasets/dataset_train.csv')
     df = df.drop('Index', axis='columns')
     numeric_df = df.select_dtypes(include=['number'])
 

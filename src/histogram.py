@@ -29,7 +29,7 @@ def diaply_all_hist(gryffindor, ravenclaw, hufflepuff, slytherin):
         ax[i].axis('off')
 
     plt.tight_layout()
-    plt.savefig('../graphs/all_histogram.png', dpi=300, bbox_inches='tight')
+    plt.savefig('graphs/all_histogram.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 
@@ -49,7 +49,7 @@ def display_single_hist(gryffindor, ravenclaw, hufflepuff, slytherin):
     plt.legend()
     plt.title('Care of Magical Creatures')
 
-    plt.savefig('../graphs/histogram.png', dpi=300, bbox_inches='tight')
+    plt.savefig('graphs/histogram.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 
@@ -59,7 +59,7 @@ def main():
     distribution between all four houses?'
     using histograms"""
 
-    df = pd.read_csv('../datasets/dataset_train.csv')
+    df = pd.read_csv('datasets/dataset_train.csv')
     df = df.drop('Index', axis='columns')
     numeric_df = df.select_dtypes(include=['number'])
 
