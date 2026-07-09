@@ -10,44 +10,53 @@ The goal of this project is to build a logistic regression model from scratch in
 
 ## Instructions
 
-Create virtual environment:
+Create and cctivate virtual environment:
 
 ```sh
 make
 ```
-
-Activate virtual environment:
-
 ```sh
 source .venv/bin/activate
 ```
 
-Data Analysis:
+### Data Analysis
 
 ```sh
 python src/describe.py datasets/dataset_train.csv
 ```
 
-Training the model:
+### Data Visualization
+
+```sh
+python src/histogram.py
+```
+```sh
+python src/scatter_plot.py
+```
+```sh
+python src/pair_plot.py
+```
+
+### Logistic Regression
 
 ```sh
 python src/logreg_train.py datasets/dataset_train.csv
 ```
-
-Predicting:
-
 ```sh
 python src/logreg_predict.py datasets/dataset_test.csv
 ```
 
-Clean the results (houses.csv, model.json):
+Cleanining:
 
+training files:
 ```sh
 make clean
 ```
-
-Clean virtual environment:
-
+graphs:
+```sh
+make clean-graphs
+```
+virtual environment
 ```sh
 make fclean
 ```
