@@ -13,5 +13,5 @@ def plot_loss(loss_history, name):
         ax.grid(True)
 
     plt.tight_layout()
-    plt.savefig(name + "_loss" + ".png")
+    plt.savefig("graphs/" + name + "_loss" + ".png")
     plt.close()

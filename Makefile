@@ -14,7 +14,7 @@ clean:
 	rm -rf model.json houses.csv
 
 clean-graphs:
-	rm -rf BGD_loss.png SGD_loss.png Mini_batch_GD_loss.png
+	rm -rf graphs/*
 
 fclean:
 	rm -rf $(VENV)
