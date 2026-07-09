@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import sys
 
+
 def main():
     """We have to answer the question
     'What are the two features that are similar?'
