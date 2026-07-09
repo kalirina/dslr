@@ -32,6 +32,7 @@ def main():
     plt.ylabel(top_features[1])
 
     plt.title('Most similar features')
+    plt.savefig('../graphs/scatter_plot.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 
