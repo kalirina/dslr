@@ -11,7 +11,7 @@ def export_to_json(stats_dict):
         "std": {feat: stats_dict[feat]["Std"] for feat in stats_dict}
     }
 
-    with open("src/model.json", "w") as f:
+    with open("model.json", "w") as f:
         json.dump(export_data, f, indent=4)
 
 
