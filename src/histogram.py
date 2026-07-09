@@ -71,6 +71,7 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == '-all':
         diaply_all_hist(gryffindor, ravenclaw, hufflepuff, slytherin)
     else:
+        assert len(sys.argv) == 1, "Invalid arguments"
         display_single_hist(gryffindor, ravenclaw, hufflepuff, slytherin)
 
 
