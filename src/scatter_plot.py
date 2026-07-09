@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import sys
 
 
 def main():
@@ -38,6 +39,7 @@ def main():
 
 if __name__ == '__main__':
     try:
+        assert len(sys.argv) == 1, "Invalid number of arguments"
         main()
     except Exception as e:
         print(e)
